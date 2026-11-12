@@ -1,0 +1,19 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /videos/{episodeId}/{fileName} {
+      allow read: if true;
+      allow create, update: if request.resource != null
+        && request.resource.size <= 500 * 1024 * 1024
+        && request.resource.contentType.matches('video/(mp4|webm|quicktime)');
+      allow delete: if true;
+    }
+    match /media/{episodeId}/{fileName} {
+      allow read: if true;
+      allow create, update: if request.resource != null
+        && ((request.resource.size <= 30 * 1024 * 1024 && request.resource.contentType.matches('image/(jpeg|png|webp|gif)'))
+          || (request.resource.size <= 150 * 1024 * 1024 && request.resource.contentType.matches('audio/(mpeg|mp4|aac|ogg|wav|webm)')));
+      allow delete: if true;
+    }
+  }
+}
