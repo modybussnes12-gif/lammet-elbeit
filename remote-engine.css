@@ -1,0 +1,109 @@
+/* ==========================================================================
+   VORTEX REMOTE ENGINE — أنماط التركيز وواجهة الريموت
+   تُحمَّل بعد الهوية لضمان ظهور إطار التركيز الذهبي فوق كل شيء.
+   ========================================================================== */
+
+:root {
+  --vx-focus: #F0D394;
+  --vx-focus-ring: rgba(240, 211, 148, .55);
+  --vx-focus-glow: rgba(217, 182, 111, .30);
+}
+
+/* إطار تركيز موحد وواضح من مسافة المشاهدة */
+:where(a, button, input, select, textarea, [role="button"], [tabindex]):focus-visible,
+.vortex-focused {
+  outline: 3px solid var(--vx-focus) !important;
+  outline-offset: 3px !important;
+  border-radius: 12px;
+}
+
+/* البطاقات والأغلفة: إبراز هادئ دون قفزات */
+.story-card.vortex-focused,
+.story-card:focus-within {
+  outline: 3px solid var(--vx-focus) !important;
+  outline-offset: 4px !important;
+  transform: translateY(-4px) scale(1.02) !important;
+  box-shadow: 0 20px 46px rgba(0, 0, 0, .55), 0 0 26px var(--vx-focus-glow) !important;
+  z-index: 5;
+}
+
+/* أزرار وأدوات: توهج ذهبي بسيط */
+button.vortex-focused,
+a.btn.vortex-focused,
+.btn.vortex-focused,
+.episode-play.vortex-focused,
+.season-tab.vortex-focused,
+.cinema-arrow.vortex-focused,
+.cinema-pause.vortex-focused,
+.cinema-primary.vortex-focused,
+.cinema-secondary.vortex-focused,
+.cinema-favorite.vortex-focused,
+.control-btn.vortex-focused,
+.settings-select.vortex-focused,
+.resume-choice.vortex-focused,
+.vortex-nav-link.vortex-focused {
+  outline: 3px solid var(--vx-focus) !important;
+  outline-offset: 3px !important;
+  border-color: var(--vx-focus) !important;
+  box-shadow: 0 0 0 6px rgba(240, 211, 148, .14), 0 10px 30px rgba(0, 0, 0, .4) !important;
+}
+
+/* حقول الإدخال */
+input.vortex-focused,
+textarea.vortex-focused,
+select.vortex-focused {
+  outline: 3px solid var(--vx-focus) !important;
+  outline-offset: 2px !important;
+  border-color: var(--vx-focus) !important;
+  box-shadow: 0 0 0 5px rgba(240, 211, 148, .12) !important;
+}
+
+/* حلقات داخل البانر */
+.cinema-dots button.vortex-focused { outline-offset: 2px !important; }
+
+/* تلميح الريموت */
+#vortex-remote-hint {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 22px;
+  z-index: 9999;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  margin-inline: auto;
+  padding: 11px 18px;
+  border-radius: 999px;
+  background: rgba(13, 21, 36, .94);
+  border: 1px solid rgba(240, 211, 148, .45);
+  color: #F0D394;
+  font: 600 14px/1.5 "Cairo", "Alexandria", Tahoma, Arial, sans-serif;
+  text-align: center;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .5);
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity .35s ease, transform .35s ease;
+  direction: rtl;
+}
+#vortex-remote-hint.is-gone { opacity: 0; transform: translateY(8px); }
+
+/* مؤشر الانتقال بين الصفحات */
+html.vortex-page-leaving body { opacity: .72; transition: opacity .16s ease; }
+
+/* لا نطارد التركيز عند السحب بالماوس */
+@media (pointer: fine) {
+  .vortex-focused:not(:focus) { outline-color: transparent !important; }
+}
+
+/* وضع التلفزيون: إطار أعرض قليلًا وأوضح */
+.vortex-tv-mode .story-card.vortex-focused,
+.vortex-tv-mode .story-card:focus-within {
+  outline-width: 4px !important;
+}
+.vortex-tv-mode :where(a, button, .vortex-focused):focus-visible,
+.vortex-tv-mode .vortex-focused {
+  outline-width: 4px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .story-card.vortex-focused,
+  .story-card:focus-within { transition: none !important; transform: none !important; }
+}
