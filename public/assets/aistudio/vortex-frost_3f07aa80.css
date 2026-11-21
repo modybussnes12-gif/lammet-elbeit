@@ -1,0 +1,704 @@
+/* VORTEX FROST CINEMA — lightweight global design system
+   No external libraries, no canvas, and no heavy blur filters. */
+:root {
+  color-scheme: dark;
+  --frost-bg: #071426;
+  --frost-bg-2: #0B1C31;
+  --frost-surface: #102844;
+  --frost-surface-2: #163653;
+  --frost-raised: #1C4667;
+  --frost-line: rgba(140, 204, 240, .22);
+  --frost-line-strong: rgba(140, 204, 240, .48);
+  --frost-blue: #3986B9;
+  --frost-cyan: #8CCCF0;
+  --frost-ice: #D9F1FF;
+  --frost-white: #F4F8FC;
+  --frost-text: #B6C9D8;
+  --frost-dim: #8299AC;
+  --frost-success: #62C8A5;
+  --frost-warning: #E8BD77;
+  --frost-danger: #E47789;
+  --frost-gradient: linear-gradient(135deg, #D9F1FF 0%, #8CCCF0 54%, #3986B9 100%);
+  --frost-shadow: 0 16px 38px rgba(0, 0, 0, .26);
+  --frost-radius: 20px;
+}
+
+html { background: var(--frost-bg) !important; color-scheme: dark !important; }
+body,
+body * { font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif; }
+body {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  color: var(--frost-white) !important;
+  background:
+    radial-gradient(ellipse at 8% -8%, rgba(57,134,185,.19), transparent 38%),
+    radial-gradient(ellipse at 94% 74%, rgba(25,72,109,.18), transparent 40%),
+    linear-gradient(155deg, #071426 0%, #0A1D32 52%, #071426 100%) !important;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+/* A restrained two-layer snowfall. Only transform is animated. */
+body::before,
+body::after {
+  content: "" !important;
+  display: block !important;
+  position: fixed !important;
+  inset: -12vh 0 0 !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  filter: none !important;
+  background-repeat: repeat !important;
+  will-change: transform;
+}
+body::before {
+  opacity: .17 !important;
+  background-image:
+    radial-gradient(circle, rgba(235,248,255,.9) 0 1px, transparent 1.8px),
+    radial-gradient(circle, rgba(166,219,247,.8) 0 1.2px, transparent 2px) !important;
+  background-size: 210px 230px, 330px 310px !important;
+  background-position: 18px 28px, 120px 92px !important;
+  animation: frostSnowNear 34s linear infinite !important;
+}
+body::after {
+  opacity: .085 !important;
+  background-image: radial-gradient(circle, rgba(217,241,255,.95) 0 1.5px, transparent 2.5px) !important;
+  background-size: 390px 360px !important;
+  background-position: 52px 44px !important;
+  animation: frostSnowFar 52s linear infinite !important;
+}
+@keyframes frostSnowNear {
+  from { transform: translate3d(0, -5vh, 0); }
+  to { transform: translate3d(7px, 105vh, 0); }
+}
+@keyframes frostSnowFar {
+  from { transform: translate3d(-4px, -8vh, 0); }
+  to { transform: translate3d(-10px, 108vh, 0); }
+}
+body.vortex-watch-page::before,
+body.vortex-watch-page::after { display: none !important; animation: none !important; }
+body.vortex-admin-page::before { opacity: .065 !important; }
+body.vortex-admin-page::after { opacity: .035 !important; }
+html.vortex-no-snow body::before, html.vortex-no-snow body::after,
+html.vortex-reduce-motion body::before, html.vortex-reduce-motion body::after,
+html.vortex-tv-reduced-motion body::before, html.vortex-tv-reduced-motion body::after,
+html.vortex-data-saver body::before, html.vortex-data-saver body::after,
+html.vortex-saver body::before, html.vortex-saver body::after {
+  display: none !important; animation: none !important;
+}
+
+/* Snow stays in the page background stacking context; UI positioning is untouched. */
+.ambient, .ambient-canvas, .ambient-orb, .ambient-doodle, .cinema-light {
+  display: none !important;
+  animation: none !important;
+  filter: none !important;
+}
+
+/* Shared typography, focus and controls. */
+:where(h1,h2,h3,h4,h5,h6,.brand-copy strong,.brand-name,.page-title strong,.section-head h2,.detail-copy h1,.title-group h1,.panel-head h2,.panel h2,.panel h3) {
+  color: var(--frost-white) !important;
+  letter-spacing: 0 !important;
+  text-wrap: pretty;
+}
+:where(p,.section-head p,.card-content p,.detail-description,.panel-head small,.episode-description,.muted,.source,.hint) {
+  color: var(--frost-text) !important;
+}
+:where(a,button,input,select,textarea,[role="button"],[tabindex]):focus-visible,
+.vortex-focused {
+  outline: 3px solid var(--frost-ice) !important;
+  outline-offset: 3px !important;
+  box-shadow: 0 0 0 6px rgba(140,204,240,.18) !important;
+}
+button, a, select, input { -webkit-tap-highlight-color: transparent; }
+:where(.btn,.cinema-primary,.cinema-secondary,.cinema-favorite,.episode-play,.season-tab,.read-btn,.back-btn,.top-link,.vortex-nav-link,.tv-mode-toggle,.resume-btn,.resume-choice,.control-btn,.frost-snow-toggle) {
+  border-radius: 13px !important;
+  font-weight: 800 !important;
+  transition: background-color .14s ease, border-color .14s ease, color .14s ease, transform .14s ease, box-shadow .14s ease !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+:where(.btn,.cinema-secondary,.cinema-favorite,.episode-play,.season-tab,.read-btn,.back-btn,.top-link,.vortex-nav-link,.tv-mode-toggle) {
+  color: var(--frost-ice) !important;
+  background: #102844 !important;
+  border: 1px solid var(--frost-line) !important;
+  box-shadow: none !important;
+}
+:where(.btn.primary,.btn.gold,.cinema-primary,.primary-button,.watch-primary,.resume-btn,.resume-choice.primary,.season-tab.active) {
+  color: #071426 !important;
+  background: var(--frost-gradient) !important;
+  border: 1px solid rgba(217,241,255,.7) !important;
+  box-shadow: 0 6px 18px rgba(57,134,185,.2) !important;
+}
+:where(.btn.danger,.danger) {
+  color: #FFC4CF !important;
+  background: rgba(228,119,137,.12) !important;
+  border-color: rgba(228,119,137,.46) !important;
+}
+:where(.btn:not(:disabled),.cinema-primary,.cinema-secondary,.cinema-favorite,.episode-play,.season-tab,.back-btn,.top-link,.vortex-nav-link):hover {
+  border-color: var(--frost-cyan) !important;
+  transform: translateY(-1px);
+}
+:where(button:disabled,.btn:disabled,[aria-disabled="true"]) { opacity: .48 !important; cursor: not-allowed !important; transform: none !important; }
+
+/* Navigation bars */
+header.top, header.topbar, .navbar, .nav {
+  background: rgba(7,20,38,.95) !important;
+  color: var(--frost-white) !important;
+  border-color: var(--frost-line) !important;
+  box-shadow: 0 7px 22px rgba(0,0,0,.2) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+header.top, header.topbar { border-bottom: 1px solid var(--frost-line) !important; }
+.brand-mark, .brand-icon, .side-brand .brand-mark, .avatar {
+  background: linear-gradient(145deg, #D9F1FF, #8CCCF0 60%, #3986B9) !important;
+  color: #071426 !important;
+  border: 1px solid rgba(217,241,255,.55) !important;
+  box-shadow: 0 5px 16px rgba(57,134,185,.2) !important;
+}
+.brand-copy strong, .brand-name, .side-brand strong, .page-title strong { color: var(--frost-white) !important; }
+.brand-copy small, .brand-sub, .page-title small { color: #A9C4D7 !important; }
+.vortex-nav {
+  display: flex !important;
+  align-items: center !important;
+  gap: 7px !important;
+  overflow-x: auto !important;
+  scrollbar-width: none !important;
+  border-top: 1px solid rgba(140,204,240,.09) !important;
+}
+.vortex-nav::-webkit-scrollbar { display: none !important; }
+.vortex-nav-link { white-space: nowrap !important; padding: 8px 13px !important; }
+.vortex-nav-link.is-active, .vortex-nav-link.active, .nav button.active {
+  color: #071426 !important;
+  background: var(--frost-gradient) !important;
+  border-color: #D9F1FF !important;
+}
+.frost-snow-toggle {
+  flex: 0 0 auto !important;
+  min-height: 36px !important;
+  padding: 7px 11px !important;
+  color: var(--frost-ice) !important;
+  background: rgba(140,204,240,.08) !important;
+  border: 1px solid var(--frost-line) !important;
+  font-size: 12px !important;
+  white-space: nowrap !important;
+}
+.frost-snow-toggle[aria-pressed="false"] { color: var(--frost-text) !important; opacity: .75; }
+.vortex-status { color: var(--frost-text) !important; }
+.vortex-status b, .vortex-status strong { color: var(--frost-ice) !important; }
+
+/* Home — cinematic hero and library rails. */
+.vortex-home-page .top { background: rgba(7,20,38,.96) !important; }
+.cinema-hero {
+  position: relative !important;
+  isolation: isolate !important;
+  width: min(1540px, calc(100% - 36px)) !important;
+  min-height: clamp(470px, 63vh, 690px) !important;
+  margin: 20px auto 34px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(140,204,240,.28) !important;
+  border-radius: 28px !important;
+  background: linear-gradient(125deg,#0B1C31 0%,#102844 58%,#071426 100%) !important;
+  box-shadow: var(--frost-shadow), inset 0 1px rgba(255,255,255,.035) !important;
+}
+.cinema-media { position: absolute !important; inset: 0 !important; background: linear-gradient(130deg,#163653,#071426 74%) !important; }
+.cinema-image {
+  position: absolute !important;
+  inset: 0 auto 0 0 !important;
+  width: 64% !important;
+  height: 100% !important;
+  max-width: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  opacity: .9 !important;
+  filter: saturate(.84) contrast(1.06) !important;
+  transform: none !important;
+}
+.cinema-light { display: block !important; position: absolute !important; inset: 0 !important; background: radial-gradient(ellipse at 23% 28%,rgba(140,204,240,.15),transparent 38%) !important; pointer-events: none !important; }
+.cinema-shade {
+  position: absolute !important; inset: 0 !important; width: 100% !important;
+  background: linear-gradient(90deg,rgba(7,20,38,.03) 0%,rgba(7,20,38,.3) 26%,rgba(7,20,38,.84) 59%,#071426 100%), linear-gradient(0deg,rgba(7,20,38,.72),transparent 45%) !important;
+  pointer-events: none !important;
+}
+.cinema-copy {
+  position: relative !important;
+  width: min(54%, 720px) !important;
+  margin-inline-start: auto !important;
+  padding: clamp(24px,4vw,54px) !important;
+  border: 1px solid rgba(140,204,240,.2) !important;
+  border-radius: 23px !important;
+  background: rgba(7,20,38,.72) !important;
+  box-shadow: 0 16px 36px rgba(0,0,0,.22) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+.cinema-kicker, .cinema-side-note, .cinema-meta { color: #B6DDF3 !important; }
+.cinema-kicker .live-dot { background: var(--frost-cyan) !important; box-shadow: 0 0 0 4px rgba(140,204,240,.13) !important; }
+.cinema-type, .chip, .watch-chip {
+  color: var(--frost-ice) !important;
+  background: rgba(140,204,240,.1) !important;
+  border: 1px solid rgba(140,204,240,.25) !important;
+}
+.cinema-copy h1 { color: var(--frost-white) !important; text-shadow: 0 4px 22px rgba(0,0,0,.32) !important; }
+.cinema-copy p { color: #C2D5E3 !important; }
+.cinema-primary { min-height: 48px !important; padding: 12px 22px !important; }
+.cinema-secondary, .cinema-favorite, .cinema-arrow, .cinema-pause {
+  color: var(--frost-ice) !important;
+  background: rgba(16,40,68,.82) !important;
+  border: 1px solid rgba(140,204,240,.35) !important;
+}
+.cinema-controls { z-index: 6 !important; }
+.cinema-dots button.active, .cinema-dots button[aria-current="true"] { background: var(--frost-cyan) !important; }
+#library { padding-top: 18px !important; padding-bottom: 52px !important; }
+.personal-section { margin-bottom: 34px !important; }
+.section-head { align-items: flex-end !important; margin-bottom: 15px !important; gap: 14px !important; }
+.section-head h2 { color: var(--frost-white) !important; font-size: clamp(20px,2vw,28px) !important; }
+.section-head p { color: var(--frost-dim) !important; }
+.section-kicker { color: var(--frost-cyan) !important; }
+#story-grid.grid, .personal-grid {
+  display: grid !important;
+  grid-template-columns: repeat(5,minmax(0,1fr)) !important;
+  gap: 17px !important;
+}
+.story-card, .personal-grid .story-card {
+  overflow: hidden !important;
+  min-width: 0 !important;
+  background: linear-gradient(155deg,#102844,#0B1C31) !important;
+  border: 1px solid rgba(140,204,240,.18) !important;
+  border-radius: 17px !important;
+  box-shadow: 0 9px 22px rgba(0,0,0,.22) !important;
+  transition: transform .15s ease, border-color .15s ease, box-shadow .15s ease !important;
+}
+.story-card:hover, .story-card:focus-within, .story-card.vortex-focused {
+  border-color: var(--frost-cyan) !important;
+  box-shadow: 0 12px 25px rgba(0,0,0,.28), 0 0 0 1px rgba(140,204,240,.16) !important;
+  transform: translateY(-2px) !important;
+}
+.story-card .cover, .story-card .card-cover, .cover.cover-poster, .poster-frame, .poster-fallback {
+  background: linear-gradient(145deg,#163653,#071426) !important;
+}
+.story-card .cover { overflow: hidden !important; }
+.story-card .cover img { transition: transform .18s ease !important; }
+.story-card:hover .cover img, .story-card:focus-within .cover img { transform: scale(1.025) !important; }
+.card-content { background: #102844 !important; color: var(--frost-white) !important; }
+.card-content h3 { color: var(--frost-white) !important; }
+.card-content p { color: var(--frost-text) !important; }
+.card-content small, .card-meta, .source { color: var(--frost-dim) !important; }
+.read-btn { color: #071426 !important; background: var(--frost-gradient) !important; border-color: #D9F1FF !important; }
+.favorite-toggle { color: var(--frost-ice) !important; background: rgba(7,20,38,.86) !important; border-color: var(--frost-line-strong) !important; }
+.searchbox input, .filters select, .filters input, #search, .searchbox, .search-suggestions, .search-history, .state, .empty {
+  color: var(--frost-white) !important;
+  background: #0B1C31 !important;
+  border-color: var(--frost-line) !important;
+  box-shadow: none !important;
+}
+.searchbox:focus-within, .filters:focus-within, input:focus, textarea:focus, select:focus { border-color: var(--frost-cyan) !important; }
+.state.error { color: #FFC4CF !important; background: rgba(115,28,50,.22) !important; border-color: rgba(228,119,137,.42) !important; }
+.empty { color: var(--frost-text) !important; border-style: dashed !important; }
+.empty strong { color: var(--frost-cyan) !important; }
+.footer { background: #061120 !important; color: var(--frost-dim) !important; border-top: 1px solid var(--frost-line) !important; }
+.footer strong, .developer-credit b { color: var(--frost-cyan) !important; }
+
+/* Details — visual hierarchy, readable information and episode cards. */
+.vortex-details-page .top { background: rgba(7,20,38,.96) !important; }
+.detail-hero {
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 430px !important;
+  margin: 24px auto 25px !important;
+  border: 1px solid rgba(140,204,240,.27) !important;
+  border-radius: 25px !important;
+  background: linear-gradient(125deg,#102844,#0B1C31 62%,#071426) !important;
+  box-shadow: var(--frost-shadow) !important;
+}
+.detail-backdrop { opacity: .48 !important; filter: saturate(.78) !important; }
+.detail-hero::after {
+  background: linear-gradient(90deg,rgba(7,20,38,.2) 0%,rgba(7,20,38,.62) 40%,rgba(7,20,38,.95) 100%), linear-gradient(0deg,rgba(7,20,38,.55),transparent 50%) !important;
+}
+.detail-content { position: relative !important; z-index: 1 !important; }
+.poster-frame { border: 1px solid var(--frost-line-strong) !important; box-shadow: 0 12px 26px rgba(0,0,0,.3) !important; }
+.detail-copy h1 { color: var(--frost-white) !important; }
+.detail-description { color: #C5D6E4 !important; }
+.detail-actions .btn.soft, .detail-actions .btn:not(.primary) { color: var(--frost-ice) !important; background: #102844 !important; border-color: var(--frost-line) !important; }
+.detail-layout { gap: 20px !important; }
+.panel, .fact, .episode-card, .season-card, .side-link, .info-panel {
+  color: var(--frost-white) !important;
+  background: #102844 !important;
+  border: 1px solid var(--frost-line) !important;
+  border-radius: 17px !important;
+  box-shadow: 0 8px 21px rgba(0,0,0,.18) !important;
+  backdrop-filter: none !important;
+}
+.panel-head { background: linear-gradient(110deg,#153653,#102844) !important; border-bottom: 1px solid var(--frost-line) !important; }
+.panel-head h2, .panel-head h3, .panel h2, .panel h3 { color: var(--frost-white) !important; }
+.panel-head small, .episode-description, .fact small { color: var(--frost-text) !important; }
+.panel-body { color: var(--frost-text) !important; }
+.season-tab.active, .episode-play { color: #071426 !important; background: var(--frost-gradient) !important; border-color: var(--frost-ice) !important; }
+.episode-number, .detail-progress { color: var(--frost-cyan) !important; }
+
+/* Admin — keep all management functions but give the workspace the same winter system. */
+.vortex-admin-page .app { background: transparent !important; }
+.sidebar {
+  background: linear-gradient(180deg,#0B1C31,#071426) !important;
+  border-left: 1px solid var(--frost-line) !important;
+  box-shadow: 8px 0 26px rgba(0,0,0,.16) !important;
+}
+.side-cap, .sidebar small, .side-user small { color: var(--frost-dim) !important; }
+.sidebar .nav button, .nav button {
+  color: var(--frost-text) !important;
+  background: transparent !important;
+  border: 1px solid transparent !important;
+}
+.sidebar .nav button.active, .sidebar .nav button:hover {
+  color: #071426 !important;
+  background: var(--frost-gradient) !important;
+  border-color: rgba(217,241,255,.72) !important;
+  box-shadow: none !important;
+}
+.main, .content { background: transparent !important; color: var(--frost-white) !important; }
+.vortex-admin-page .topbar {
+  background: rgba(7,20,38,.96) !important;
+  border-bottom: 1px solid var(--frost-line) !important;
+  box-shadow: 0 5px 18px rgba(0,0,0,.16) !important;
+}
+.page-head h1, .page-title strong { color: var(--frost-white) !important; }
+.page-head p, .page-title small { color: var(--frost-text) !important; }
+.hero {
+  background: linear-gradient(120deg,#0E2944 0%,#163E5F 58%,#0B1C31 100%) !important;
+  border: 1px solid var(--frost-line-strong) !important;
+  border-radius: 22px !important;
+  box-shadow: var(--frost-shadow) !important;
+}
+.hero h2, .hero p { color: var(--frost-white) !important; }
+.metric, .panel, .modal, .cloud-card, .note, .table-card, .form-card {
+  color: var(--frost-white) !important;
+  background: #102844 !important;
+  border: 1px solid var(--frost-line) !important;
+  box-shadow: 0 8px 22px rgba(0,0,0,.17) !important;
+}
+.metric label, .metric-foot, .panel-head p, .note, .hint { color: var(--frost-text) !important; }
+.metric strong { color: var(--frost-ice) !important; }
+.panel-head, .modal-head { background: linear-gradient(110deg,#153653,#102844) !important; border-bottom: 1px solid var(--frost-line) !important; }
+.panel-head h3, .modal-head h2 { color: var(--frost-white) !important; }
+.toolbar input, .toolbar select, .search input, .field input, .field select, .field textarea, .form-grid input, .form-grid select, .form-grid textarea {
+  color: var(--frost-white) !important;
+  background: #071A2D !important;
+  border: 1px solid var(--frost-line) !important;
+  border-radius: 11px !important;
+  box-shadow: none !important;
+}
+.table-wrap { background: transparent !important; }
+table { color: var(--frost-white) !important; }
+th { color: var(--frost-cyan) !important; background: rgba(140,204,240,.07) !important; }
+td { color: var(--frost-text) !important; border-color: rgba(140,204,240,.12) !important; }
+.modal-backdrop { background: rgba(1,8,16,.78) !important; backdrop-filter: none !important; }
+.modal { background: #0B1C31 !important; }
+.modal-content { color: var(--frost-white) !important; }
+.badge, .count, .metric-icon { border-color: var(--frost-line) !important; }
+
+/* Frost player — the video remains the focus; controls are compact overlays. */
+.vortex-watch-page { background: #050D18 !important; }
+.vortex-watch-page .topbar {
+  min-height: 58px !important;
+  padding-block: 7px !important;
+  background: #071426 !important;
+  box-shadow: none !important;
+}
+.vortex-watch-page .shell { width: min(1600px,calc(100% - 40px)) !important; }
+.vortex-watch-page .page { padding-top: 14px !important; }
+.vortex-watch-page .player-stage {
+  position: relative !important;
+  isolation: isolate !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  max-height: calc(100vh - 116px) !important;
+  min-height: 310px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(140,204,240,.24) !important;
+  border-radius: 18px !important;
+  background: #020812 !important;
+  box-shadow: 0 16px 38px rgba(0,0,0,.3) !important;
+}
+.vortex-watch-page .player-stage:after { display: none !important; }
+.vortex-watch-page .player-stage video,
+.vortex-watch-page .youtube-root,
+.vortex-watch-page .youtube-root iframe {
+  position: absolute !important; inset: 0 !important; width: 100% !important; height: 100% !important;
+  border: 0 !important; background: #020812 !important; object-fit: contain !important;
+}
+.vortex-watch-page .player-topbar {
+  position: absolute !important;
+  z-index: 9 !important;
+  top: 0 !important; left: 0 !important; right: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  min-height: 68px !important;
+  margin: 0 !important;
+  padding: 12px 22px 20px !important;
+  background: linear-gradient(180deg,rgba(2,8,18,.88),rgba(2,8,18,0)) !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transform: translateY(-5px) !important;
+  transition: opacity .16s ease,transform .16s ease !important;
+}
+.vortex-watch-page .player-topbar > * { pointer-events: auto !important; }
+.vortex-watch-page .player-topbar h1 { color: var(--frost-white) !important; font-size: clamp(18px,2vw,26px) !important; text-shadow: 0 2px 10px rgba(0,0,0,.55) !important; }
+.vortex-watch-page .player-topbar p { color: #C5D9E8 !important; }
+.vortex-watch-page .player-stage.controls-visible .player-topbar,
+.vortex-watch-page .player-stage.paused .player-topbar,
+.vortex-watch-page .player-stage.has-resume-prompt .player-topbar { opacity: 1 !important; transform: none !important; }
+.vortex-watch-page .player-stage.controls-hidden .player-topbar { opacity: 0 !important; pointer-events: none !important; }
+.vortex-watch-page .big-play {
+  width: 82px !important; height: 82px !important;
+  border: 1px solid rgba(217,241,255,.9) !important;
+  background: var(--frost-gradient) !important;
+  color: #071426 !important;
+  box-shadow: 0 8px 25px rgba(0,0,0,.36),0 0 0 8px rgba(140,204,240,.12) !important;
+  backdrop-filter: none !important;
+}
+.vortex-watch-page .floating-controls {
+  position: absolute !important;
+  z-index: 10 !important;
+  left: 0 !important; right: 0 !important; bottom: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+  padding: 94px clamp(14px,2.3vw,30px) 16px !important;
+  border: 0 !important; border-radius: 0 !important;
+  background: linear-gradient(180deg,rgba(2,8,18,0),rgba(2,8,18,.72) 26%,rgba(2,8,18,.96)) !important;
+  box-shadow: none !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+  opacity: 0 !important; visibility: hidden !important; pointer-events: none !important;
+  transform: translateY(7px) !important;
+  transition: opacity .16s ease,transform .16s ease,visibility .16s linear !important;
+}
+.vortex-watch-page .player-stage.controls-visible .floating-controls,
+.vortex-watch-page .player-stage.paused .floating-controls,
+.vortex-watch-page .player-stage.has-resume-prompt .floating-controls {
+  opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; transform: none !important;
+}
+.vortex-watch-page .player-stage.controls-hidden .floating-controls {
+  opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; transform: translateY(7px) !important;
+}
+.vortex-watch-page .player-stage.cursor-hidden,
+.vortex-watch-page .player-stage.controls-hidden { cursor: none !important; }
+.vortex-watch-page .timeline {
+  order: 0 !important; display: flex !important; flex: 0 0 auto !important;
+  flex-direction: column !important; align-items: stretch !important; gap: 5px !important;
+  width: 100% !important; min-width: 0 !important;
+}
+.vortex-watch-page .progress-range {
+  width: 100% !important; min-width: 0 !important; height: 5px !important; margin: 0 !important;
+  appearance: none !important; -webkit-appearance: none !important; border: 0 !important;
+  border-radius: 99px !important; background: rgba(140,204,240,.24) !important;
+  accent-color: var(--frost-cyan) !important;
+}
+.vortex-watch-page .progress-range::-webkit-slider-thumb {
+  appearance: none !important; -webkit-appearance: none !important;
+  width: 13px !important; height: 13px !important; border-radius: 50% !important;
+  border: 2px solid #F4F8FC !important; background: var(--frost-cyan) !important;
+  box-shadow: 0 0 0 3px rgba(140,204,240,.13) !important;
+}
+.vortex-watch-page .progress-range::-moz-range-thumb { width: 11px !important; height: 11px !important; border: 2px solid #F4F8FC !important; border-radius: 50% !important; background: var(--frost-cyan) !important; }
+.vortex-watch-page .timeline-times { display: flex !important; justify-content: space-between !important; width: 100% !important; direction: ltr !important; }
+.vortex-watch-page .time { color: #D5E6F2 !important; font-size: 11px !important; font-variant-numeric: tabular-nums !important; }
+.vortex-watch-page .control-row {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: minmax(0,1fr) auto minmax(0,1fr) !important;
+  align-items: center !important;
+  gap: 8px !important;
+  direction: ltr !important;
+  min-height: 52px !important;
+}
+.vortex-watch-page .primary-controls {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 11px !important;
+  direction: ltr !important;
+}
+.vortex-watch-page #seek-back { order: 1 !important; }
+.vortex-watch-page #play-toggle { order: 2 !important; }
+.vortex-watch-page #seek-forward { order: 3 !important; }
+.vortex-watch-page .utility-controls {
+  grid-column: 3 !important;
+  grid-row: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  min-width: 0 !important;
+}
+.vortex-watch-page .control-btn {
+  min-width: 42px !important; width: 42px !important; height: 42px !important;
+  padding: 0 8px !important;
+  border: 1px solid rgba(140,204,240,.3) !important;
+  border-radius: 12px !important;
+  color: var(--frost-ice) !important;
+  background: rgba(16,40,68,.92) !important;
+  box-shadow: none !important; transform: none !important;
+  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+  transition: background .12s ease,border-color .12s ease,color .12s ease !important;
+}
+.vortex-watch-page .control-btn:hover,
+.vortex-watch-page .control-btn.vortex-focused { color: #071426 !important; background: var(--frost-gradient) !important; border-color: #D9F1FF !important; }
+.vortex-watch-page .play-control {
+  width: 54px !important; min-width: 54px !important; height: 54px !important;
+  border-radius: 50% !important; color: #071426 !important;
+  background: var(--frost-gradient) !important; border-color: #D9F1FF !important;
+}
+.vortex-watch-page .control-svg { width: 19px !important; height: 19px !important; }
+.vortex-watch-page .icon-control { width: 39px !important; min-width: 39px !important; height: 39px !important; }
+.vortex-watch-page .volume { display: flex !important; align-items: center !important; gap: 6px !important; color: var(--frost-ice) !important; }
+.vortex-watch-page .volume .range { width: 68px !important; accent-color: var(--frost-cyan) !important; }
+.vortex-watch-page .settings-select {
+  height: 39px !important; max-width: 104px !important; min-width: 58px !important;
+  padding: 0 7px !important; color: var(--frost-white) !important;
+  background: #0B1C31 !important; border: 1px solid var(--frost-line) !important;
+  border-radius: 10px !important; font-size: 11px !important;
+}
+.vortex-watch-page .select-control { color: var(--frost-text) !important; font-size: 10px !important; }
+.vortex-watch-page .settings-select option { color: #F4F8FC !important; background: #0B1C31 !important; }
+.vortex-watch-page .pause-overlay { background: linear-gradient(180deg,rgba(2,8,18,.1),rgba(2,8,18,.64)) !important; backdrop-filter: none !important; }
+.vortex-watch-page .pause-overlay:before { filter: none !important; opacity: .22 !important; }
+.vortex-watch-page .pause-card {
+  background: rgba(7,26,45,.96) !important; border: 1px solid var(--frost-line-strong) !important;
+  box-shadow: 0 12px 28px rgba(0,0,0,.34) !important; backdrop-filter: none !important;
+}
+.vortex-watch-page .pause-name, .vortex-watch-page .pause-status { color: var(--frost-ice) !important; }
+.vortex-watch-page .resume-btn, .vortex-watch-page .resume-choice.primary { background: var(--frost-gradient) !important; color: #071426 !important; border-color: #D9F1FF !important; }
+.vortex-watch-page .resume-prompt, .vortex-watch-page .auto-next-overlay {
+  color: var(--frost-white) !important; background: #0B1C31 !important;
+  border: 1px solid var(--frost-line-strong) !important; box-shadow: 0 12px 28px rgba(0,0,0,.38) !important;
+  backdrop-filter: none !important;
+}
+.vortex-watch-page .resume-choice { color: var(--frost-ice) !important; background: #102844 !important; border: 1px solid var(--frost-line) !important; }
+.vortex-watch-page .player-message { color: #EAF6FE !important; background: #0B1C31 !important; border-color: var(--frost-line-strong) !important; }
+.vortex-watch-page .info-panel, .vortex-watch-page .next-card {
+  color: var(--frost-white) !important; background: #102844 !important;
+  border: 1px solid var(--frost-line) !important; box-shadow: none !important;
+}
+.vortex-watch-page .info-panel h2, .vortex-watch-page .next-card strong { color: var(--frost-ice) !important; }
+.vortex-watch-page .info-panel p, .vortex-watch-page .next-card small, .vortex-watch-page .support-note { color: var(--frost-text) !important; }
+.vortex-watch-page .next-button { color: var(--frost-cyan) !important; }
+.vortex-watch-page:fullscreen .player-stage,
+.vortex-watch-page .player-stage:fullscreen { width: 100vw !important; height: 100vh !important; max-height: none !important; aspect-ratio: auto !important; border: 0 !important; border-radius: 0 !important; }
+
+/* Responsive refinement */
+@media (max-width: 1100px) {
+  #story-grid.grid, .personal-grid { grid-template-columns: repeat(4,minmax(0,1fr)) !important; }
+  .cinema-copy { width: min(62%,700px) !important; }
+  .vortex-watch-page .utility-controls { gap: 4px !important; }
+  .vortex-watch-page .volume .range { width: 48px !important; }
+}
+@media (max-width: 820px) {
+  .cinema-hero { min-height: 580px !important; }
+  .cinema-image { width: 100% !important; height: 52% !important; inset: 0 0 auto !important; }
+  .cinema-shade { background: linear-gradient(180deg,rgba(7,20,38,.03) 0%,rgba(7,20,38,.2) 30%,rgba(7,20,38,.94) 58%,#071426 100%) !important; }
+  .cinema-copy { width: 100% !important; margin: auto 0 0 !important; padding: 24px 22px 62px !important; border: 0 !important; background: linear-gradient(180deg,rgba(7,20,38,.05),rgba(7,20,38,.88)) !important; box-shadow: none !important; }
+  .cinema-inner { min-height: 580px !important; align-items: flex-end !important; }
+  #story-grid.grid, .personal-grid { grid-template-columns: repeat(3,minmax(0,1fr)) !important; }
+  .vortex-watch-page .control-row { grid-template-columns: 1fr auto !important; }
+  .vortex-watch-page .primary-controls { grid-column: 2 !important; }
+  .vortex-watch-page .utility-controls { grid-column: 1 / -1 !important; grid-row: 2 !important; justify-content: center !important; }
+  .vortex-watch-page .floating-controls { padding-top: 90px !important; }
+}
+@media (max-width: 620px) {
+  .cinema-hero { width: calc(100% - 18px) !important; min-height: 590px !important; margin-top: 10px !important; border-radius: 19px !important; }
+  .cinema-inner { min-height: 590px !important; width: calc(100% - 18px) !important; }
+  .cinema-image { height: 46% !important; }
+  .cinema-copy { padding: 20px 5px 66px !important; }
+  .cinema-copy h1 { font-size: clamp(28px,7vw,38px) !important; }
+  .cinema-copy p { font-size: 13px !important; line-height: 1.8 !important; }
+  .cinema-actions { display: flex !important; flex-wrap: wrap !important; gap: 8px !important; }
+  .cinema-actions > * { min-height: 43px !important; }
+  #story-grid.grid, .personal-grid { grid-template-columns: repeat(2,minmax(0,1fr)) !important; gap: 11px !important; }
+  .section-head h2 { font-size: 19px !important; }
+  .section-head p { font-size: 12px !important; }
+  .vortex-nav { gap: 5px !important; }
+  .vortex-nav-link { padding: 7px 10px !important; font-size: 12px !important; }
+  .frost-snow-toggle { min-height: 32px !important; padding: 5px 8px !important; font-size: 10px !important; }
+  .detail-hero { min-height: 0 !important; margin: 13px auto 16px !important; border-radius: 18px !important; }
+  .detail-content { grid-template-columns: 88px minmax(0,1fr) !important; gap: 13px !important; padding: 17px 14px !important; }
+  .poster-frame { max-width: 88px !important; }
+  .detail-copy h1 { font-size: clamp(22px,6.5vw,30px) !important; }
+  .detail-description { font-size: 13px !important; line-height: 1.8 !important; }
+  .vortex-watch-page .shell { width: calc(100% - 14px) !important; }
+  .vortex-watch-page .topbar { min-height: 52px !important; padding-inline: 8px !important; }
+  .vortex-watch-page .player-stage { min-height: 220px !important; border-radius: 12px !important; aspect-ratio: 16 / 9 !important; }
+  .vortex-watch-page .player-topbar { min-height: 50px !important; padding: 8px 10px 16px !important; }
+  .vortex-watch-page .player-topbar h1 { font-size: 15px !important; }
+  .vortex-watch-page .player-topbar p { font-size: 9px !important; }
+  .vortex-watch-page .floating-controls { padding: 72px 9px 9px !important; gap: 6px !important; }
+  .vortex-watch-page .control-row { grid-template-columns: 1fr auto !important; gap: 6px !important; }
+  .vortex-watch-page .primary-controls { gap: 5px !important; }
+  .vortex-watch-page .control-btn { min-width: 34px !important; width: 34px !important; height: 34px !important; border-radius: 10px !important; padding: 0 5px !important; font-size: 10px !important; }
+  .vortex-watch-page .play-control { min-width: 44px !important; width: 44px !important; height: 44px !important; }
+  .vortex-watch-page .icon-control { min-width: 32px !important; width: 32px !important; height: 32px !important; }
+  .vortex-watch-page .control-svg { width: 16px !important; height: 16px !important; }
+  .vortex-watch-page .utility-controls { justify-content: space-between !important; gap: 4px !important; }
+  .vortex-watch-page .volume .range { width: 35px !important; min-width: 26px !important; }
+  .vortex-watch-page .settings-select { min-width: 46px !important; max-width: 70px !important; height: 32px !important; padding-inline: 4px !important; font-size: 9px !important; }
+  .vortex-watch-page .select-control { font-size: 9px !important; }
+  .vortex-watch-page .time { font-size: 9px !important; }
+  .vortex-watch-page .big-play { width: 58px !important; height: 58px !important; }
+  .vortex-watch-page .under-player { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 380px) {
+  .vortex-watch-page .utility-controls { flex-wrap: wrap !important; }
+  .vortex-watch-page .select-control span { display: none !important; }
+  .vortex-watch-page .volume .range { width: 25px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  body::before, body::after { display: none !important; }
+}
+
+/* Intro, reading dialog, notifications and small utility surfaces. */
+#vortex-intro {
+  color: var(--frost-white) !important;
+  background: radial-gradient(ellipse at 50% 35%,#163D60 0%,#0B1C31 48%,#050E1B 100%) !important;
+}
+#vortex-intro .vortex-intro-grid { opacity: .12 !important; }
+#vortex-intro .vortex-emblem {
+  background: linear-gradient(145deg,rgba(217,241,255,.18),rgba(57,134,185,.13)) !important;
+  border: 1px solid rgba(140,204,240,.4) !important;
+  box-shadow: 0 0 0 8px rgba(140,204,240,.05),0 12px 30px rgba(0,0,0,.22) !important;
+}
+#vortex-intro .vortex-intro-title,
+#vortex-intro .vortex-intro-tagline,
+#vortex-intro .vortex-intro-dev { color: var(--frost-white) !important; }
+#vortex-intro .vortex-intro-rule { background: linear-gradient(90deg,transparent,var(--frost-cyan),transparent) !important; }
+#vortex-intro-skip {
+  color: var(--frost-ice) !important; background: rgba(16,40,68,.88) !important;
+  border: 1px solid var(--frost-line-strong) !important; border-radius: 12px !important;
+}
+.vortex-toast, .toast {
+  color: var(--frost-white) !important; background: #102844 !important;
+  border: 1px solid var(--frost-line-strong) !important; box-shadow: 0 10px 24px rgba(0,0,0,.28) !important;
+}
+dialog, #reader {
+  color: var(--frost-white) !important; background: #0B1C31 !important;
+  border: 1px solid var(--frost-line-strong) !important; border-radius: 19px !important;
+  box-shadow: 0 22px 60px rgba(0,0,0,.48) !important;
+}
+dialog::backdrop { background: rgba(1,8,16,.78) !important; backdrop-filter: none !important; }
+.reader-head, .modal-head {
+  color: var(--frost-white) !important;
+  background: linear-gradient(110deg,#163653,#0B1C31) !important;
+  border-bottom: 1px solid var(--frost-line) !important;
+}
+.reader-head h2, .modal-head h2 { color: var(--frost-white) !important; }
+.reader-head p { color: var(--frost-text) !important; }
+.reader-body, .modal-content, .reader-bottom { color: var(--frost-text) !important; background: #0B1C31 !important; }
+.reader-description { color: var(--frost-text) !important; background: #102844 !important; border-right-color: var(--frost-cyan) !important; }
+.reader-close, .close { color: var(--frost-ice) !important; background: #102844 !important; border: 1px solid var(--frost-line) !important; }
+.vortex-intro-progress { background: rgba(140,204,240,.25) !important; }
+.vortex-intro-progress::after { background: var(--frost-gradient) !important; }

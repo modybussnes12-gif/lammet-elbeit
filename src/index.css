@@ -1,0 +1,224 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root,
+  [data-theme="obsidian"] {
+    color-scheme: dark;
+    --bg-canvas: #060911;
+    --bg-surface: #0e1525;
+    --bg-elevated: #141e33;
+    --bg-overlay: rgba(8, 13, 25, 0.9);
+    --bg-glass: rgba(14, 21, 37, 0.74);
+    --text-primary: #f6f8fc;
+    --text-secondary: #b6c2d9;
+    --text-muted: #7c8aa5;
+    --border-subtle: rgba(255, 255, 255, 0.09);
+    --border-strong: rgba(255, 255, 255, 0.18);
+    --accent-primary: #f4ba48;
+    --accent-primary-ink: #0a0f1a;
+    --accent-secondary: #4f8bff;
+    --accent-danger: #ef4444;
+    --accent-success: #22c55e;
+    --hero-scrim: linear-gradient(90deg, rgba(6, 9, 17, 0.96) 0%, rgba(6, 9, 17, 0.78) 44%, rgba(6, 9, 17, 0.18) 100%);
+    --hero-bottom-scrim: linear-gradient(180deg, rgba(6, 9, 17, 0) 0%, rgba(6, 9, 17, 0.65) 55%, #060911 100%);
+    --shadow-card: 0 18px 42px -18px rgba(0, 0, 0, 0.75);
+    --focus-ring: #4f8bff;
+  }
+
+  [data-theme="frost"] {
+    color-scheme: dark;
+    --bg-canvas: #071426;
+    --bg-surface: #0d213a;
+    --bg-elevated: #142c4c;
+    --bg-overlay: rgba(7, 20, 38, 0.9);
+    --bg-glass: rgba(13, 33, 58, 0.76);
+    --text-primary: #f1f8ff;
+    --text-secondary: #bdd9f2;
+    --text-muted: #82a7c9;
+    --border-subtle: rgba(140, 204, 240, 0.14);
+    --border-strong: rgba(140, 204, 240, 0.28);
+    --accent-primary: #8cccf0;
+    --accent-primary-ink: #051224;
+    --accent-secondary: #f4ba48;
+    --accent-danger: #f87171;
+    --accent-success: #34d399;
+    --hero-scrim: linear-gradient(90deg, rgba(7, 20, 38, 0.95) 0%, rgba(7, 20, 38, 0.76) 46%, rgba(7, 20, 38, 0.2) 100%);
+    --hero-bottom-scrim: linear-gradient(180deg, rgba(7, 20, 38, 0) 0%, rgba(7, 20, 38, 0.68) 55%, #071426 100%);
+    --shadow-card: 0 18px 42px -18px rgba(2, 10, 24, 0.8);
+    --focus-ring: #8cccf0;
+  }
+
+  [data-theme="daylight"] {
+    color-scheme: light;
+    --bg-canvas: #f7f8fc;
+    --bg-surface: #ffffff;
+    --bg-elevated: #eef2f9;
+    --bg-overlay: rgba(255, 255, 255, 0.95);
+    --bg-glass: rgba(255, 255, 255, 0.88);
+    --text-primary: #132038;
+    --text-secondary: #3f4f6b;
+    --text-muted: #667691;
+    --border-subtle: rgba(19, 32, 56, 0.1);
+    --border-strong: rgba(19, 32, 56, 0.2);
+    --accent-primary: #2b5ce0;
+    --accent-primary-ink: #ffffff;
+    --accent-secondary: #d98a09;
+    --accent-danger: #dc2626;
+    --accent-success: #16a34a;
+    --hero-scrim: linear-gradient(90deg, rgba(12, 20, 38, 0.9) 0%, rgba(12, 20, 38, 0.68) 46%, rgba(12, 20, 38, 0.18) 100%);
+    --hero-bottom-scrim: linear-gradient(180deg, rgba(12, 20, 38, 0) 0%, rgba(12, 20, 38, 0.62) 55%, rgba(12, 20, 38, 0.92) 100%);
+    --shadow-card: 0 14px 32px -16px rgba(19, 32, 56, 0.2);
+    --focus-ring: #2b5ce0;
+  }
+
+  html {
+    font-family: "Cairo", "Tajawal", system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background-color: var(--bg-canvas);
+    color: var(--text-primary);
+    font-feature-settings: "kern" 1;
+  }
+
+  p,
+  textarea {
+    font-family: "Tajawal", "Cairo", system-ui, sans-serif;
+  }
+
+  button,
+  a,
+  input,
+  select {
+    font-family: "Cairo", "Tajawal", system-ui, sans-serif;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible,
+  [data-focusable="true"]:focus-visible {
+    outline: 3px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Tactile Royal Primary & Glass Button System */
+.btn-royal {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, color-mix(in srgb, var(--accent-primary) 78%, #ffffff) 100%);
+  color: var(--accent-primary-ink);
+  box-shadow: 0 10px 26px -10px color-mix(in srgb, var(--accent-primary) 65%, transparent);
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 200ms ease, filter 160ms ease;
+}
+.btn-royal:hover {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
+}
+.btn-royal:active {
+  transform: scale(0.97);
+}
+
+.btn-glass {
+  background-color: rgba(10, 15, 28, 0.52);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  backdrop-filter: blur(12px);
+  transition: background-color 160ms ease, transform 160ms cubic-bezier(0.22, 1, 0.36, 1), border-color 160ms ease;
+}
+.btn-glass:hover {
+  background-color: rgba(10, 15, 28, 0.74);
+  border-color: rgba(255, 255, 255, 0.36);
+}
+.btn-glass:active {
+  transform: scale(0.97);
+}
+
+/* TV Mode 10-Foot UI & Samsung Tizen Cursor Suppression */
+[data-tv-mode="true"] {
+  font-size: 17px;
+}
+
+[data-tv-mode="true"].tv-cursor-hidden,
+[data-tv-mode="true"].tv-cursor-hidden * {
+  cursor: none !important;
+}
+
+[data-tv-mode="true"] .tv-overscan {
+  padding-inline: clamp(24px, 4vw, 64px);
+}
+
+[data-tv-mode="true"] [data-focusable="true"]:focus,
+[data-tv-mode="true"] [data-focusable="true"]:focus-visible,
+[data-tv-mode="true"] button:focus-visible {
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 4px;
+  transform: scale(1.035);
+  box-shadow: 0 0 0 6px color-mix(in srgb, var(--accent-primary) 26%, transparent), var(--shadow-card);
+  z-index: 20;
+}
+
+/* Frost snow ambient particles */
+@keyframes frostFall {
+  0% {
+    transform: translate3d(0, -10vh, 0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.45;
+  }
+  85% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translate3d(18px, 105vh, 0);
+    opacity: 0;
+  }
+}
+
+.frost-flake {
+  animation: frostFall linear infinite;
+}
+
+@keyframes kenBurnsSlow {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.065) translate3d(-1%, -0.5%, 0);
+  }
+}
+
+.hero-ken-burns {
+  animation: kenBurnsSlow 18s ease-in-out alternate infinite;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-ken-burns,
+  .frost-flake {
+    animation: none !important;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}
