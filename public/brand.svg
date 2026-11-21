@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="lammetGrad" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#F5B942" />
+      <stop offset="55%" stop-color="#4F8BFF" />
+      <stop offset="100%" stop-color="#27C7D8" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="#0B1324" />
+  <path d="M10 29L32 10L54 29" stroke="url(#lammetGrad)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M16 27V51C16 53.2 17.8 55 20 55H44C46.2 55 48 53.2 48 51V27" fill="url(#lammetGrad)" fill-opacity="0.18" stroke="url(#lammetGrad)" stroke-width="3.2" stroke-linejoin="round" />
+  <path d="M27 35L42 44L27 53V35Z" fill="#F5B942" stroke="#F5B942" stroke-width="1.5" stroke-linejoin="round" />
+</svg>

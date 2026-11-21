@@ -1,0 +1,6 @@
+{
+  "name": "لمة البيت — سينما العيلة والذكريات",
+  "description": "منصة سينما العائلة والحكايات والذكريات والصوتيات بتجربة متكاملة على التلفاز واللاب توب والتابلت والهاتف.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

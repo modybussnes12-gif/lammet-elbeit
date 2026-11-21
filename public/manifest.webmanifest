@@ -1,0 +1,33 @@
+{
+  "id": "./",
+  "name": "لمة البيت — سينما العيلة والذكريات",
+  "short_name": "لمة البيت",
+  "description": "منصة سينما العائلة والحكايات والذكريات والصوتيات بتجربة متكاملة على التلفاز والهاتف.",
+  "start_url": "./?autostart=1",
+  "scope": "./",
+  "display": "standalone",
+  "dir": "rtl",
+  "lang": "ar",
+  "background_color": "#060911",
+  "theme_color": "#060911",
+  "icons": [
+    {
+      "src": "pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
